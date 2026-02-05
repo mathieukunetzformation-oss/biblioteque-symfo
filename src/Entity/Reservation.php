@@ -15,7 +15,7 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Book $book = null;
+    private ?Exemplaire $exemplaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?User $reserving_user = null;
@@ -31,14 +31,14 @@ class Reservation
         return $this->id;
     }
 
-    public function getBook(): ?Book
+    public function getExemplaire(): ?Book
     {
-        return $this->book;
+        return $this->exemplaire;
     }
 
-    public function setBook(?Book $book): static
+    public function setExemplaire(?Exemplaire $exemplaire): static
     {
-        $this->book = $book;
+        $this->exemplaire = $exemplaire;
 
         return $this;
     }

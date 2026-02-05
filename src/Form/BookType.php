@@ -17,17 +17,14 @@ class BookType extends AbstractType
     {
         $builder
             ->add('isbnID', TextType::class, [
-            'label' => 'Code ISBN du livre'
-        ])
+                'label' => 'Code ISBN du livre'
+            ])
             ->add('title', TextType::class, [
-            'label' => 'Titre du livre'
-        ])
+                'label' => 'Titre du livre'
+            ])
             ->add('author', TextType::class, [
-            'label' => 'Auteur du livre'
-        ]) 
-            ->add('is_avaiable', ChoiceType::class, [
-            'label' => 'Disponible'
-        ])
+                'label' => 'Auteur du livre'
+            ])
             ->add('category', EntityType::class, [
                 'label' => 'Categorie',
                 'class' => Category::class,
