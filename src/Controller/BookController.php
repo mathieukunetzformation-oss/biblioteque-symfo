@@ -50,8 +50,11 @@ final class BookController extends AbstractController
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
     public function show(Book $book): Response
     {
+        $user = $this->getUser();
+
         return $this->render('book/show.html.twig', [
             'book' => $book,
+            'user' => $user,
         ]);
     }
 
@@ -75,6 +78,25 @@ final class BookController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    // public function borrow(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(BookType::class, $book);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
+
+    //         $this->addFlash('success', 'Livre modifié!');
+
+    //         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->render('book/edit.html.twig', [
+    //         'book' => $book,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]

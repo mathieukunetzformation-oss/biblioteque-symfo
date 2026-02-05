@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,8 +30,17 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Category $category = null;
 
-    #[ORM\Column]
-    private ?bool $is_avaiable = null;
+
+    /**
+     * @var Collection<int, Exemplaire>
+     */
+    #[ORM\OneToMany(targetEntity: Exemplaire::class, mappedBy: 'book')]
+    private Collection $exemplaires;
+
+    public function __construct()
+    {
+        $this->exemplaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -84,14 +95,33 @@ class Book
         return $this;
     }
 
-    public function isAvaiable(): ?bool
+
+    /**
+     * @return Collection<int, Exemplaire>
+     */
+    public function getExemplaires(): Collection
     {
-        return $this->is_avaiable;
+        return $this->exemplaires;
     }
 
-    public function setIsAvaiable(bool $is_avaiable): static
+    public function addExemplaire(Exemplaire $exemplaire): static
     {
-        $this->is_avaiable = $is_avaiable;
+        if (!$this->exemplaires->contains($exemplaire)) {
+            $this->exemplaires->add($exemplaire);
+            $exemplaire->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExemplaire(Exemplaire $exemplaire): static
+    {
+        if ($this->exemplaires->removeElement($exemplaire)) {
+            // set the owning side to null (unless already changed)
+            if ($exemplaire->getBook() === $this) {
+                $exemplaire->setBook(null);
+            }
+        }
 
         return $this;
     }

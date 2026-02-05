@@ -12,9 +12,9 @@
 				<div>
 					<h3>{{ reservation.book.title }}</h3>
 					<p>Date d'emprunt:
-						{{ reservation.date_reservation|date('d/m/Y') }}</p>
+						{{ reservation.getDateReservation()|date('d/m/Y') }}</p>
 					<p>Date de retour:
-						{{ reservation.date_expectedReturn|date('d/m/Y') }}</p>
+						{{ reservation.getDateExpectedReturn()|date('d/m/Y') }}</p>
 				</div>
 			{% endfor %}
 		{% else %}
