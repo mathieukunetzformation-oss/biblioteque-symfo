@@ -16,19 +16,21 @@
 
 <body>
     <header>
+        
         <div>
+            <a href="{{ path('app_login') }}" >Se connecter</a>
             <a href="">Vos réservations</a>
+            
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
         <div>
-            <a href="{{ path('app_login') }}">Se connecter</a>
             <a href="{{ path('app_register') }}">S'inscrire</a>
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
         </div>
         <h1>Bibliothèque de Coudures</h1>
         <nav>
             <div>
                 <a href="{{ path('app_book_index') }}">Livres</a>
-                <a href="{{ path('app_category_index') }}"></a>
+                <a href="{{ path('app_category_index') }}">Catégories</a>
             </div>
         </nav>
     </header>
