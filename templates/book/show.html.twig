@@ -9,10 +9,6 @@
 	<table class="table">
 		<tbody>
 			<tr>
-				<th>Id</th>
-				<td>{{ book.id }}</td>
-			</tr>
-			<tr>
 				<th>IsbnID</th>
 				<td>{{ book.isbnID }}</td>
 			</tr>
@@ -26,9 +22,41 @@
 			</tr>
 		</tbody>
 	</table>
-	{% if user %}
 
-		<p>Reservez !</p>
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert alert-{{ label }}">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
+	{% if app.user %}
+		{% if book.exemplaires
+					|filter(exemplaire => exemplaire.isAvailable())
+					|length > 0 %}
+			{# {% if 1 %}  #}
+			{# to check controller check works and display message when no stock available #}
+			{{ form_start(reservationForm, {
+			action: path('app_reservation_new', { id: book.id }),
+			method: 'POST'
+		}) }}
+			{{ form_row(reservationForm.date_reservation) }}{{ form_row(reservationForm.date_expectedReturn) }}<button>
+			Réserver le livre
+			</button>
+			{{ form_end(reservationForm) }}
+		{% else %}
+			<p>Aucun exemplaire actuellement disponible à la réservation.</p>
+		{% endif %}
+	{% else %}
+		{% if book.exemplaires
+        |filter(exemplaire => exemplaire.isAvailable())
+        |length > 0 %}
+			<p>Connectez-vous pour réserver ce livre.</p>
+			<a href="{{ path('app_login') }}">Se connecter</a>
+		{% else %}
+			<p>Aucun exemplaire actuellement disponible à la réservation. Connectez-vous quand un exemplaire est disponible pour réserver.</p>
+		{% endif %}
 
 	{% endif %}
 

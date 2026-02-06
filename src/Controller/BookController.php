@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Form\ReservationType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,10 +52,15 @@ final class BookController extends AbstractController
     public function show(Book $book): Response
     {
         $user = $this->getUser();
+        $reservationForm = null;
 
+        if ($this->getUser()) {
+            $reservationForm = $this->createForm(ReservationType::class)->createView();
+        }
         return $this->render('book/show.html.twig', [
             'book' => $book,
             'user' => $user,
+            'reservationForm' => $reservationForm,
         ]);
     }
 
