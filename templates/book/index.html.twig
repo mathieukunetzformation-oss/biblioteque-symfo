@@ -9,9 +9,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>IsbnID</th>
-				<th>Title</th>
+				<th class="prout">Title</th>
 				<th>Author</th>
 				<th>Exemplaire available</th>
 				<th>actions</th>
@@ -20,8 +18,6 @@
 		<tbody>
 			{% for book in books %}
 				<tr>
-					<td>{{ book.id }}</td>
-					<td>{{ book.isbnID }}</td>
 					<td>{{ book.title }}</td>
 					<td>{{ book.author }}</td>
 					<td>{{ book.exemplaires
