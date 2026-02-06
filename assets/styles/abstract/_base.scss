@@ -1,0 +1,13 @@
+@use '_variables.scss' as *;
+
+header {
+    background-color: $header-color;
+}
+
+body {
+    background-color: $body-color;
+}
+
+.prout {
+    background-color: rgb(71, 87, 35);
+}
