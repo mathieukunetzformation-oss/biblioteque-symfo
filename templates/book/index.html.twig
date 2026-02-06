@@ -9,9 +9,9 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th class="prout">Title</th>
-				<th>Author</th>
-				<th>Exemplaire available</th>
+				<th >Titre</th>
+				<th>Auteur</th>
+				<th>Exemplaire disponible</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -25,8 +25,8 @@
                     |length }}</td>
 
 					<td>
-						<a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-						<a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+						<a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn">show</a>
+						<a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn">edit</a>
 					</td>
 				</tr>
 			{% else %}
@@ -37,5 +37,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_book_new') }}">Create new</a>
+	<a href="{{ path('app_book_new') }}" class="btn">Create new</a>
 {% endblock %}

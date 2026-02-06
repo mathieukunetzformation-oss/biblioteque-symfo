@@ -17,11 +17,11 @@
 				<td>{{ book.isbnID }}</td>
 			</tr>
 			<tr>
-				<th>Title</th>
+				<th>Titre</th>
 				<td>{{ book.title }}</td>
 			</tr>
 			<tr>
-				<th>Author</th>
+				<th>Auteur</th>
 				<td>{{ book.author }}</td>
 			</tr>
 		</tbody>
@@ -33,9 +33,9 @@
 	{% endif %}
 
 
-	<a href="{{ path('app_book_index') }}">back to list</a>
+	<a href="{{ path('app_book_index') }}" class="btn">Retour à la liste </a>
 
-	<a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+	<a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn" >edit</a>
 
 	{{ include('book/_delete_form.html.twig') }}
 {% endblock %}
