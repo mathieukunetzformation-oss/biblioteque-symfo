@@ -1,13 +1,21 @@
 @use '_variables.scss' as *;
 
-header {
-    background-color: $header-color;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 
 body {
-    background-color: $body-color;
+    font-family: "Georgia", "Times New Roman", serif;
+    background-color: #f4f1ec;
+    color: #2c2c2c;
+    line-height: 1.6;
 }
 
-.prout {
-    background-color: rgb(71, 87, 35);
-}
+
+
+
+
+

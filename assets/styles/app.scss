@@ -1,2 +1,5 @@
 // add your SASS styles in this file
 @use 'abstract/base';
+@use 'layout/header';
+@use 'sections/table';
+@use 'sections/buttons';
