@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ReservationType;
+use App\Repository\BookRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
+use Symfony\Component\Validator\Constraints\Length;
 
 #[Route('/reservation')]
 final class ReservationController extends AbstractController
@@ -26,16 +28,39 @@ final class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/reservation/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Book $book): Response
     {
         $reservation = new Reservation();
+        $reservation->setReservingUser($this->getUser());
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //check if stock avaialable
+            //redirect if not
+            $availableExemplaire = null;
+            foreach ($book->getExemplaires() as $exemplaire) {
+                if ($exemplaire->isAvailable()) {
+                    $availableExemplaire = $exemplaire;
+                    break;
+                }
+            }
+
+            if (!$availableExemplaire) {
+                $this->addFlash('error', 'Aucun exemplaire disponible.');
+                return $this->redirectToRoute('app_book_show', ['id' => $book->getId()]);
+            }
+
+            $reservationDate = $reservation->getDateReservation();
+            $expectedReturn = (clone $reservationDate)->modify('+14 days');
+            $reservation->setDateExpectedReturn($expectedReturn);
+            $reservation->setExemplaire($availableExemplaire);
+            $availableExemplaire->setIsAvailable(0);
+
             $entityManager->persist($reservation);
             $entityManager->flush();
+
 
             $this->addFlash('success', 'Réservation ajouté !');
 
